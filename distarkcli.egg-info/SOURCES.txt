@@ -1,0 +1,8 @@
+setup.py
+distarkcli/__init__.py
+distarkcli/youpi.py
+distarkcli.egg-info/PKG-INFO
+distarkcli.egg-info/SOURCES.txt
+distarkcli.egg-info/dependency_links.txt
+distarkcli.egg-info/not-zip-safe
+distarkcli.egg-info/top_level.txt

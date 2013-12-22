@@ -1,0 +1,8 @@
+argparse
+PyYAML
+Pynetinfo
+kazoo
+protobuf
+python-dateutil
+pyzmq
+pytest
