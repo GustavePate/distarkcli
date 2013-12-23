@@ -5,6 +5,7 @@ Created on 27 avr. 2013
 @author: guillaume
 '''
 
+
 from distarkcli.protos.generic_service_pb2 import PBOnRequest
 from distarkcli.protos.generic_service_pb2 import PBOneResponse
 from distarkcli.protos.generic_service_pb2 import SIMPLE_RESPONSE

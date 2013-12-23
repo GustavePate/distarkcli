@@ -1,14 +1,17 @@
+# encoding: utf-8
 '''
 Created on 27 avr. 2013
 
 @author: guillaume
 '''
+import sys
+print sys.path
 
-from distarkcli.transport.transportpool import ConnectionPoolBorg
 from distarkcli.utils.NetInfo import NetInfo
 #from distarkcli.protos.generic_service_pb2 import PBOneRequest
 from generic_service_pb2 import PBOneRequest
 #from protos.generic_service_pb2 import PBOneResponse
+from distark.transport.transportpool import ConnectionPoolBorg
 
 
 class Distarkcli(object):
