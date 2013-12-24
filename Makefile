@@ -14,6 +14,9 @@ PROTOC_PY_PATH=${PWD}/distarkcli/protos/
 #  my targets
 ##############################
 
+clean:
+	find .  -type f -name "*.pyc" -exec rm {} \;
+
 buildclient:
 	$(PYTHON) $(CLIENTPATH)/setup.py install
 
@@ -25,7 +28,9 @@ protoc:
 	$(PROTOC) --python_out=./distarkcli/protos/ --proto_path=$(PROTOPATH) ./ressources/protos/services/*
 	$(PROTOC) --python_out=./distarkcli/protos/ --proto_path=$(PROTOPATH) ./ressources/protos/generic_service.proto
 
-main:
+main: clean mainlaunch
+
+mainlaunch:
 	echo $(PYTHONPATH)
 	$(PYTHON) -m main2 $(CLIENTPATH)/ressources/conf/configuration.yaml
 
