@@ -6,7 +6,7 @@ Created on 25 avr. 2013
 '''
 from distarkcli.protos.generic_service_pb2 import SIMPLE_REQUEST
 from distarkcli.protos.generic_service_pb2 import SIMPLE_RESPONSE
-from distarkcli.transport.distarkcli import Distarkcli
+from distarkcli.transport.distarkclient import Distarkcli
 
 
 class SimpleRequest():

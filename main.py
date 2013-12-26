@@ -25,7 +25,6 @@ class TestSimpleService(object):
 
 if __name__ == '__main__':
 
-    arg = NetInfo()
     ##############################################
     #     ARGUMENTS PARSING
     ##############################################

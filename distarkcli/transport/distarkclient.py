@@ -8,9 +8,8 @@ import sys
 print sys.path
 
 from distarkcli.utils.NetInfo import NetInfo
-#from distarkcli.protos.generic_service_pb2 import PBOneRequest
-from generic_service_pb2 import PBOneRequest
-#from protos.generic_service_pb2 import PBOneResponse
+from distarkcli.protos.generic_service_pb2 import PBOneRequest
+from distarkcli.protos.generic_service_pb2 import PBOneResponse
 from distarkcli.transport.transportpool import ConnectionPoolBorg
 
 

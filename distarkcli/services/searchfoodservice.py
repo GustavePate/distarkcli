@@ -6,7 +6,7 @@ Created on 25 avr. 2013
 '''
 from distarkcli.protos.generic_service_pb2 import SEARCH_FOOD_REQUEST
 from distarkcli.protos.generic_service_pb2 import SEARCH_FOOD_RESPONSE
-from distarkcli.transport import Distarkcli
+from distarkcli.transport.distarkclient import Distarkcli
 
 
 class SearchFoodRequest():

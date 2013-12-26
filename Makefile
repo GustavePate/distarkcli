@@ -4,10 +4,11 @@ NAME=`python setup.py --name`
 PROTOPATH=./ressources/protos/
 
 #PYTHON PATH MODIFICATION SHALL BE COPIED TO TRAVIS.YML !!! 
-CLIENTPATH=${PWD}/distarkcli/
+CLIENTSRCPATH=${PWD}/distarkcli/
+PYTHONPATH := ${PYTHONPATH}:${$CLIENTSRCPATH}
+
 PROTOC_PY_PATH=${PWD}/distarkcli/protos/
-#PYTHONPATH := ${PYTHONPATH}:$(PROTOC_PY_PATH)
-#PYTHONPATH := ${PYTHONPATH}:${$CLIENTPATH}
+PYTHONPATH := ${PYTHONPATH}:$(PROTOC_PY_PATH)
 
 
 ##############################
@@ -32,8 +33,10 @@ main: clean mainlaunch
 
 mainlaunch:
 	echo $(PYTHONPATH)
-	$(PYTHON) -m main2 $(CLIENTPATH)/ressources/conf/configuration.yaml
+	$(PYTHON) -m main $(PWD)/ressources/conf/configuration.yaml
 
 
 test:
 	py.test --maxfail=1 --showlocals  --duration=3 -v --clearcache  -s 
+
+
