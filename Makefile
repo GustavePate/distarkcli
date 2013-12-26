@@ -19,7 +19,7 @@ clean:
 	find .  -type f -name "*.pyc" -exec rm {} \;
 
 buildclient:
-	$(PYTHON) $(CLIENTPATH)/setup.py install
+	$(PYTHON) setup.py install
 
 indent:
 	$(PYTHON) -m reindent --nobackup *.py
