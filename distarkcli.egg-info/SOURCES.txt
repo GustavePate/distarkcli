@@ -21,7 +21,6 @@ distarkcli/services/simpleservice.py
 distarkcli/transport/__init__.py
 distarkcli/transport/distarkclient.py
 distarkcli/transport/majordomoclient.py
-distarkcli/transport/t.py
 distarkcli/transport/transportpool.py
 distarkcli/utils/MDP.py
 distarkcli/utils/MyConfiguration.py
