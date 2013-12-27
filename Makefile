@@ -39,4 +39,7 @@ mainlaunch:
 test:
 	py.test --maxfail=1 --showlocals  --duration=3 -v --clearcache  -s --confpath=${PWD}/ressources/conf/configuration.yaml 
 
+test.travis:
+	py.test --maxfail=1 --showlocals  --duration=3 -v --clearcache  -s --confpath=${PWD}/ressources/conf/configuration.MOCK.yaml 
+
 
