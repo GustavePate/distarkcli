@@ -7,7 +7,14 @@ Created on 25 avr. 2013
 from distarkcli.protos.generic_service_pb2 import SIMPLE_REQUEST
 from distarkcli.protos.generic_service_pb2 import SIMPLE_RESPONSE
 from distarkcli.transport.distarkclient import Distarkcli
+from distarkcli.utils.MyConfiguration import Configuration
 
+def SimpleServiceFactory(request):
+    factory = {}
+    factory['REAL'] = SimpleService
+    factory['MOCK'] = SimpleServiceMock
+    clientmockmode = Configuration.getClientMockMode()
+    return factory[clientmockmode](request)
 
 class SimpleRequest():
 
@@ -48,6 +55,18 @@ class SimpleResponse():
         self.__boum = value
 
     boum = property(getBoum, setBoum, None, None)
+
+class SimpleServiceMock():
+
+    pbresptype = SIMPLE_RESPONSE
+
+    def __init__(self, simplerequest):
+        self.objreq = simplerequest
+
+    def getResponse(self):
+        res = SimpleResponse()
+        res.setBoum(''.join(reversed(self.objreq.getYoupla())))
+        return [self.pbresptype, res]
 
 
 class SimpleService(Distarkcli):

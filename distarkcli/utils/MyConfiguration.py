@@ -108,6 +108,10 @@ class Configuration(object):
         return Configuration.logger
 
     @staticmethod
+    def getClientMockMode():
+        return Configuration.getclient()['mockmode']
+
+    @staticmethod
     def getConfigPath(underscored_file):
         pathelements = underscored_file.split("/")
         index = pathelements.index("src")

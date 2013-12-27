@@ -7,6 +7,15 @@ Created on 25 avr. 2013
 from distarkcli.protos.generic_service_pb2 import ANOTHER_REQUEST
 from generic_service_pb2 import ANOTHER_RESPONSE
 from distarkcli.transport.distarkclient import Distarkcli
+from distarkcli.utils.MyConfiguration import Configuration
+
+
+def AnotherServiceFactory(request):
+    factory = {}
+    factory['REAL'] = AnotherService
+    factory['MOCK'] = AnotherServiceMock
+    clientmockmode = Configuration.getClientMockMode()
+    return factory[clientmockmode](request)
 
 
 class AnotherRequest():
@@ -42,6 +51,20 @@ class AnotherResponse():
 
     def setResponseStr(self, value):
         self.__responsestr = value
+
+
+class AnotherServiceMock():
+
+    pbresptype = ANOTHER_RESPONSE
+
+    def __init__(self, request):
+        self.req = request
+
+    def getResponse(self):
+
+        resp = AnotherResponse()
+        resp.setResponseStr(''.join([self.req.getRequestStr(), self.req.getRequestStr()]))
+        return [self.pbresptype, resp]
 
 
 class AnotherService(Distarkcli):
