@@ -27,7 +27,6 @@ distarkcli/utils/MyConfiguration.py
 distarkcli/utils/NetInfo.py
 distarkcli/utils/PBUtils.py
 distarkcli/utils/__init__.py
-distarkcli/utils/u.py
 distarkcli/utils/uniq.py
 distarkcli/utils/zhelpers.py
 distarkcli/utils/zoo.py

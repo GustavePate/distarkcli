@@ -13,7 +13,7 @@ from distarkcli.protos.generic_service_pb2 import ERROR_NONE
 from distarkcli.utils.PBUtils import PBUtils
 from distarkcli.transport.majordomoclient import MajorDomoClient
 from distarkcli.utils.MyConfiguration import Configuration
-from distarkcli.utils.zoo import ZooBorgFactory
+from distarkcli.utils.zoo import ZooConst, ZooBorgFactory
 from distarkcli.utils.uniq import Uniq
 
 
@@ -40,16 +40,14 @@ class ConnectionPoolBorg():
                                 Configuration.getclient()['zookeeper']['port'])
 
 
-            zb = ZooBorg(Configuration.getclient()['zookeeper']['ip'],
-                         Configuration.getclient()['zookeeper']['port'])
-            zooconf = zb.getConf(ZooBorg.CLIENT)
+            zooconf = zb.getConf(ZooConst.CLIENT)
             connection_str = zooconf['broker']['connectionstr']
             uniq = Uniq()
             for _ in range(1, maxconnection):
                 conn = MajorDomoClient(connection_str, False, self)
                 self.__availableconnection.append(conn)
                 #register connexion
-                zb.register(zb.CLIENT, uniq.getid(uniq.CLIENT), self._zconfchanged)
+                zb.register(ZooConst.CLIENT, uniq.getid(uniq.CLIENT), self._zconfchanged)
             self.initialized = True
 
     def getConnection(self):

@@ -9,6 +9,12 @@ from kazoo.client import KeeperState
 from distarkcli.utils.MyConfiguration import Configuration
 
 
+class ZooConst(object):
+    CLIENT='client'
+    WORKER='worker'
+    BROKER='broker'
+
+
 def ZooBorgFactory(zoo_mock_mode, ip, port):
     factory = {}
     factory['REAL'] = ZooBorg
@@ -18,22 +24,44 @@ def ZooBorgFactory(zoo_mock_mode, ip, port):
 
 class ZooMock(object):
 
+    ip = ''
+    port = ''
+
+    def __init__(self, ip, port):
+        # copie de l'état lors de l'initialisation d'une nouvelle instance
+        self.ip=ip
+        self.port=port
+
     def getConf(self, conftype):
         '''
         conftype must be a Zooborg constant
         '''
-        if conftype not in [ZooBorg.CLIENT, ZooBorg.WORKER, ZooBorg.BROKER]:
+        if conftype not in [ZooConst.CLIENT, ZooConst.WORKER, ZooConst.BROKER]:
             raise Exception('Zooborg.getConf: invalid type')
 
         zooconf={}
 
         #TODO: specialconf entries for the mock
 
-        if conftype == ZooBorg.CLIENT:
+        if conftype == ZooConst.CLIENT:
             zooconf['broker'] = {}
             zooconf['broker']['connectionstr'] = b"tcp://localhost:5555"
 
+        elif conftype == ZooConst.BROKER:
+            zooconf['bindstr']=b"tcp://*:5555"
+
+        elif conftype == ZooConst.WORKER:
+            zooconf['broker'] = {}
+            zooconf['broker']['connectionstr'] = b"tcp://localhost:5555"
+
+        else:
+            raise Exception("ZooBorgconftype unknown")
+
+
         return zooconf
+
+    def register(self, itemtype, item_id, handler):
+        pass
 
 
 class ZooBorg(object):
@@ -43,9 +71,6 @@ class ZooBorg(object):
     distark/client/conf
     distark/client/list/client_uniq_id (ephemeral?
     '''
-    CLIENT='client'
-    WORKER='worker'
-    BROKER='broker'
     registred=[]
     client_settings={}
     client_initialized=False
@@ -117,7 +142,7 @@ class ZooBorg(object):
         # Create a node with data
         #TODO: add system properties in data (ip, os)
         #TODO: add uniq client id
-        if itemtype not in [ZooBorg.CLIENT, ZooBorg.WORKER, ZooBorg.BROKER]:
+        if itemtype not in [ZooConst.CLIENT, ZooConst.WORKER, ZooConst.BROKER]:
             raise Exception('Zooborg.register: invalid type')
         self.initconn()
         self.zk.ensure_path("/distark/" + itemtype + "/list")
@@ -139,7 +164,7 @@ class ZooBorg(object):
         itemtype must be a Zooborg constant
         item_id must be a string
         '''
-        if itemtype not in [ZooBorg.CLIENT, ZooBorg.WORKER, ZooBorg.BROKER]:
+        if itemtype not in [ZooConst.CLIENT, ZooConst.WORKER, ZooConst.BROKER]:
             raise Exception('Zooborg.unregister: invalid type')
         self.initconn()
         self.zk.ensure_path("/distark/" + itemtype + "/list")
@@ -151,7 +176,7 @@ class ZooBorg(object):
         '''
         listtype must be a Zooborg constant
         '''
-        if listtype not in [ZooBorg.CLIENT, ZooBorg.WORKER, ZooBorg.BROKER]:
+        if listtype not in [ZooConst.CLIENT, ZooConst.WORKER, ZooConst.BROKER]:
             raise Exception('Zooborg.getList: invalid type')
         self.initconn()
         return self.zk.get_children('/distark/' + listtype + '/list')
@@ -170,16 +195,16 @@ class ZooBorg(object):
         conftype must be a Zooborg constant
         '''
         zooconf={}
-        if conftype not in [ZooBorg.CLIENT, ZooBorg.WORKER, ZooBorg.BROKER]:
+        if conftype not in [ZooConst.CLIENT, ZooConst.WORKER, ZooConst.BROKER]:
             raise Exception('Zooborg.getConf: invalid type')
 
         self.initconn()
-        if conftype in [ZooBorg.CLIENT, ZooBorg.WORKER]:
+        if conftype in [ZooConst.CLIENT, ZooConst.WORKER]:
             zooconf={'broker': {'connectionstr': None}}
             zoopath='/distark/' + conftype + '/conf/broker/connectionstr'
             zooconf['broker']['connectionstr'], stat = self.zk.get(zoopath)
 
-        if conftype in [ZooBorg.BROKER]:
+        if conftype in [ZooConst.BROKER]:
             zooconf={'bindstr': None}
             zoopath='/distark/' + conftype + '/conf/bindstr'
             zooconf['bindstr'], stat = self.zk.get(zoopath)
