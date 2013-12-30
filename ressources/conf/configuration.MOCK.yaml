@@ -17,12 +17,14 @@
         'maxcon':10
     },
     'zookeeper':{
+        'mockmode':'MOCK',
         'ip':'127.0.0.1',
         'port':'2180'
     }
 },
 'broker':{
     'zookeeper':{
+        'mockmode':'MOCK',
         'ip':'127.0.0.1',
         'port':'2180'
     }

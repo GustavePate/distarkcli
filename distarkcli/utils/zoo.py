@@ -22,11 +22,18 @@ class ZooMock(object):
         '''
         conftype must be a Zooborg constant
         '''
-        zooconf={}
         if conftype not in [ZooBorg.CLIENT, ZooBorg.WORKER, ZooBorg.BROKER]:
             raise Exception('Zooborg.getConf: invalid type')
 
+        zooconf={}
 
+        #TODO: specialconf entries for the mock
+
+        if conftype == ZooBorg.CLIENT:
+            zooconf['broker'] = {}
+            zooconf['broker']['connectionstr'] = b"tcp://localhost:5555"
+
+        return zooconf
 
 
 class ZooBorg(object):
