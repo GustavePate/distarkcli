@@ -1,8 +1,9 @@
 
 #use spaces not tab !
-{ 
+{
 'client':{
     'zookeeper':{
+        'mockmode':'MOCK',
         'ip':'127.0.0.1',
         'port':'2180'
     },
@@ -30,5 +31,5 @@
    #Sur l'axe du temps écrire un label toutes les X mesures
    'XLABELFREQUENCY':900
 
-}  
+}
 }

@@ -9,6 +9,26 @@ from kazoo.client import KeeperState
 from distarkcli.utils.MyConfiguration import Configuration
 
 
+def ZooBorgFactory(zoo_mock_mode, ip, port):
+    factory = {}
+    factory['REAL'] = ZooBorg
+    factory['MOCK'] = ZooMock
+    return factory[zoo_mock_mode](ip, port)
+
+
+class ZooMock(object):
+
+    def getConf(self, conftype):
+        '''
+        conftype must be a Zooborg constant
+        '''
+        zooconf={}
+        if conftype not in [ZooBorg.CLIENT, ZooBorg.WORKER, ZooBorg.BROKER]:
+            raise Exception('Zooborg.getConf: invalid type')
+
+
+
+
 class ZooBorg(object):
     '''
     distark

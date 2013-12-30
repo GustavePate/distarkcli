@@ -13,7 +13,7 @@ from distarkcli.protos.generic_service_pb2 import ERROR_NONE
 from distarkcli.utils.PBUtils import PBUtils
 from distarkcli.transport.majordomoclient import MajorDomoClient
 from distarkcli.utils.MyConfiguration import Configuration
-from distarkcli.utils.zoo import ZooBorg
+from distarkcli.utils.zoo import ZooBorgFactory
 from distarkcli.utils.uniq import Uniq
 
 
@@ -34,6 +34,12 @@ class ConnectionPoolBorg():
         if not(self.initialized):
             #N MajorDomoClient
             #print "INIT ConnectionPool"
+
+            zb = ZooBorgFactory(Configuration.getclient()['zookeeper']['mockmode'],
+                                Configuration.getclient()['zookeeper']['ip'],
+                                Configuration.getclient()['zookeeper']['port'])
+
+
             zb = ZooBorg(Configuration.getclient()['zookeeper']['ip'],
                          Configuration.getclient()['zookeeper']['port'])
             zooconf = zb.getConf(ZooBorg.CLIENT)
